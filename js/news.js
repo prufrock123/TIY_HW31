@@ -76,6 +76,7 @@
 			$.when(
 				self.queryAPI()
 			).then(function(show){
+				document.querySelector('#feed').innerHTML = "";
 				show.forEach(function(element){
 					new newsView(element);
 				})
