@@ -35,20 +35,22 @@
 		var input = {};
 		var inputs = $(':input');
 
-		inputs.each(function(element) {
-			input[element.name] = element.value;
+		$(':input').each(function(element) {
+			input[this.name] = this.value;
 		});
-
+		
+		// input[inputs.name] = input[inputs.value]
 		console.dir(input);
 		return input;
 	}
 
 	NewsClient.prototype.queryAPI = function() {
+			
 			var selection = this.makeSelection()
 
 			var url = [
 			"http://api.npr.org/query?",
-			selection,
+			selection.choice,
 			"&apiKey=",
 			this.options.api_key,
 			"&format=json"
