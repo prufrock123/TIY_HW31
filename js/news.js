@@ -31,10 +31,24 @@
 		this.makeNewsRequest();
 	}
 
-	NewsClient.prototype.queryAPI = function(selection) {
+	NewsClient.prototype.makeSelection = function() {
+		var input = {};
+		var inputs = $(':input');
+
+		inputs.each(function(element) {
+			input[element.name] = element.value;
+		});
+
+		console.dir(input);
+		return input;
+	}
+
+	NewsClient.prototype.queryAPI = function() {
+			var selection = this.makeSelection()
+
 			var url = [
 			"http://api.npr.org/query?",
-			"id=1007",
+			selection,
 			"&apiKey=",
 			this.options.api_key,
 			"&format=json"
@@ -54,14 +68,22 @@
 	};
 
 	NewsClient.prototype.makeNewsRequest = function() {
-		$.when(
-			this.queryAPI()
-		).then(function(show){
-			show.forEach(function(element){
-				new newsView(element);
+		var self = this;
+
+		$("#submit").click(function(){
+			$.when(
+				self.queryAPI()
+			).then(function(show){
+				show.forEach(function(element){
+					new newsView(element);
+				})
 			})
 		})
 	}
+
+	// NewsClient.prototype.Instigator = function(){
+	// 	$("#submit").click(makeNewsRequest());
+	// }
 
 	window.NewsClient = NewsClient;
 })(window, undefined);
