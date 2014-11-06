@@ -17,7 +17,7 @@
 
 			this.render();
 		},
-		template: "<div class='row'><div class='large-10 columns'><h4>{$text}</h4></div></div>",
+		template: "<div class='row'><div class='large-10 columns'><a href='{link[0].$text}'><h4>{title.$text}</h4></a></div></div><hr/>",
 		render: function(){
 			this.el.innerHTML = _.template(this.template, this.options);
 		}
@@ -58,7 +58,7 @@
 			this.queryAPI()
 		).then(function(show){
 			show.forEach(function(element){
-				new newsView(element.title);
+				new newsView(element);
 			})
 		})
 	}
