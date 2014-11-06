@@ -28,7 +28,7 @@
 			api_key: "MDExMDUwNjE5MDEzNjMzNzI4MzNkM2M2Zg001"
 		});
 
-		this.queryAPI();
+		this.makeNewsRequest();
 	}
 
 	NewsClient.prototype.queryAPI = function(selection) {
@@ -46,6 +46,7 @@
 				var show = data.list.story;
 				// console.dir(show)
 				show.forEach(function(element){ 
+					console.log(element)
 					console.log(element.title.$text);
 				})
 				return show;
@@ -54,10 +55,10 @@
 
 	NewsClient.prototype.makeNewsRequest = function() {
 		$.when(
-			this.queryAPI("id=1007")
+			this.queryAPI()
 		).then(function(show){
-			show.title.forEach(function(showTitle){
-				new newsView(showTitle);
+			show.forEach(function(element){
+				new newsView(element.title);
 			})
 		})
 	}
